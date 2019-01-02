@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<img src="http://7xiba5.com2.z0.glb.clouddn.com/07202017-1601-0000-0030-000000000098/20180117225412/file/image/M_20180117225408_0000_T.jpg" class="img1"/>
+<input type="button" value="download_image" onclick="downloadIamge('.img1','chenguihai.jpg')"/>
+<script type="application/javascript">
+    function downloadIamge(selector, name) {
+        var image = new Image();
+        // 解决跨域 Canvas 污染问题
+        image.setAttribute('crossOrigin', 'anonymous');
+        image.onload = function () {
+            var canvas = document.createElement('canvas');
+            canvas.width = image.width;
+            canvas.height = image.height;
+            var context = canvas.getContext('2d');
+            context.drawImage(image, 0, 0, image.width, image.height);
+            if(isIE()){
+                saveFileForIE(canvas, name);
+            }{
+
+                var url = canvas.toDataURL('image/png');
+
+                // 生成一个a元素
+                var a = document.createElement('a');
+                // 创建一个单击事件
+                var event = new MouseEvent('click');
+                a.download = name || new Date().getTime();
+                // 将生成的URL设置为a.href属性
+                a.href = url;
+
+
+                // 触发a的单击事件
+                a.dispatchEvent(event)
+
+            }
+
+        };
+        image.src = document.querySelector(selector).src
+    }
+    function isIE() { //ie?
+        if (!!window.ActiveXObject || "ActiveXObject" in window)
+            return true;
+        else
+            return false;
+    }
+    function saveFileForIE(canvas, fileName) {
+        try {
+            var blob = canvas.msToBlob();
+            navigator.msSaveBlob(blob, fileName);
+        }catch (e) {
+            owlzerOBj.UTILE.alertP('Please upgrade your browser');
+        }
+    }
+</script>
+</body>
+</html>
