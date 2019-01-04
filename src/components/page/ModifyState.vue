@@ -10,12 +10,12 @@
             </div>
             <div class="Dynamic_top">
                 <el-row>
-                  <el-button>确定</el-button>
+                  <el-button @click="handleClick">确定</el-button>
                   <el-button @click="cancelUpload">取消</el-button>
                 </el-row>
             </div>
             <div class="Dynamic_cont">
-                <el-form ref="form" :model="contract" label-width="0px">
+                <el-form ref="form" :model="fileList" label-width="0px">
                     <el-form-item label="内容">
                         <el-input type="textarea" placeholder="输入内容" v-model="fileList.content"></el-input>
                     </el-form-item>
@@ -29,7 +29,6 @@
                           :limit="20"
                           :on-success="handleSuccess"
                           >
-
                           <i class="el-icon-plus"></i>
                         </el-upload>
                         <el-dialog :visible.sync="dialogVisible">
@@ -49,15 +48,6 @@
             return {
                 dialogVisible: false,
                 dialogImageUrl:'',
-                id:'',
-                form:{
-                    name:''
-                },
-                contract: {
-                    customerid: '',
-                    id: '',
-                    remark:''
-                },
                 fileList:{
                     content:'的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的所多所多撒奥多所所',
                     list:[
@@ -90,10 +80,16 @@
             },
             // 删除图片时的事件
             handleRemove(file, fileList) {
-                console.log(file, fileList);
+//                console.log(file, fileList);
+                this.fileList.list=fileList
             },
             handleSuccess(response, file, fileList){
                 console.log( fileList);
+                this.fileList.list=fileList
+            },
+            //确定
+            handleClick(){
+                console.dir(this.fileList)
             },
             cancelUpload(){
                 this.$router.push({path:'/ordermandeteail'});

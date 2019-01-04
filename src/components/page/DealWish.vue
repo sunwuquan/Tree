@@ -41,7 +41,7 @@
             <div class="deal-botton" v-show="!show" @click="handleClick">处理</div>
             <div v-show="show" style="margin: 60px auto 0;text-align: center">
 
-                <img class="deal-two" :src="pic" alt="">
+                <div class="deal-two" id="qrcode"></div>
                 <div class="deal-botton" @click="handleDown">下载</div>
             </div>
 
@@ -49,14 +49,13 @@
     </div>
 </template>
 <script>
+    import QRCode from 'qrcodejs2'
     export default {
         name: 'dealwish',
         data() {
             return {
                 show: false,
-                isIE:true,
-//                pic: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546497260&di=88d6fbdb2a2e1380b4b36a253285abb0&imgtype=jpg&er=1&src=http%3A%2F%2Fupload.mnw.cn%2F2016%2F0126%2F1453768615784.jpg',
-                pic:'http://7xiba5.com2.z0.glb.clouddn.com/07202017-1601-0000-0030-000000000098/20180117225412/file/image/M_20180117225408_0000_T.jpg',
+                isIE: true,
                 date: {
                     name: '',
                     phone: '',
@@ -81,15 +80,37 @@
             //处理
             handleClick() {
                 this.show = true;
-                console.dir(this.date)
+//                var Id=this.date.id
+//                this.getEr(Id)
+                this.getEr('https://www.baidu.com')
+            },
+            getEr(url) {
+                    let qrcode = new QRCode('qrcode', { // qrcode  html为标签id
+                        text: url, // 内容
+                        // render: 'canvas' // 设置渲染方式（有两种方式 table和canvas，默认是canvas)
+                        colorDark: "#333333", //二维码颜色
+                        colorLight: "#ffffff", //二维码背景色
+                        correctLevel: QRCode.CorrectLevel.L//容错率，L/M/H
+                });
+                    console.dir(qrcode)
+                return qrcode
             },
             handleDown() {
-                console.log("===下载")
-                this.downloadIamge();
+//                this.downloadIamge();
+                var oQrcode = document.querySelector('#qrcode img')
+                var url = oQrcode.src
+                var a = document.createElement('a')
+                var event = new MouseEvent('click')
+                // 下载图名字
+                a.download = 'chenguihai'
+                //url
+                a.href = url
+                //合成函数，执行下载
+                a.dispatchEvent(event)
             },
 //  =============================================================================================
             downloadIamge() {
-                var name='chenguihai.jpg'
+                var name = 'chenguihai.jpg'
                 var image = new Image();
                 // 解决跨域 Canvas 污染问题
                 image.setAttribute('crossOrigin', 'anonymous');
@@ -121,7 +142,7 @@
                     }
 
                 };
-                image.src = this.pic
+                image.src = document.querySelector('#qrcode img').src
                 console.log("====")
             },
 //            isIE() { //ie?
@@ -225,6 +246,9 @@
                 text-align: center;
                 font-family: Microsoft Yahei;
                 border: 1px solid rgba(187, 187, 187, 1);
+            }
+            #qrcode{
+                display: inline-block;
             }
             .deal-two {
                 width: 304px;

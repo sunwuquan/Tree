@@ -21,8 +21,21 @@
             </div>
             <div class="map_d">
                 <baidu-map class="map" :center="center" :zoom="zoom" @click="getClickInfo" @ready="handler">
+                    //路线
+                    <bm-driving
+                        :start="start"
+                        :end="ent"
+                        :auto-viewport="true"
+                        policy="BMAP_DRIVING_POLICY_LEAST_DISTANCE"
+                        :panel="false"
+                        location=""
+                    >
+                    </bm-driving>
+                    //缩放
                     <bm-navigation anchor="BMAP_ANCHOR_TOP_LEFT"></bm-navigation>
-                    <!--<bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :showAddressBar="true" :autoLocation="true"></bm-geolocation>-->
+                    //定位
+                    <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :showAddressBar="true" @locationSuccess="locationSuccess" :autoLocation="true"></bm-geolocation>
+
                     <bm-marker :position="center" :dragging="true" @click="infoWindowOpen">
                         <bm-info-window :show="show" @close="infoWindowClose" @open="infoWindowOpen">
                             经度:{{center.lng}}<br>纬度:{{center.lat}}
@@ -42,6 +55,11 @@
             return {
                 type:'',
                 show: false,
+                ent:'',
+                start:{
+                    lat: 39.91488908,
+                    lng: 116.40387397
+                },
                 center: {
                     lng: 116.424,
                     lat: 39.915
@@ -68,12 +86,19 @@
 //                this.$router.push({ path: '/editbase', query: { center:item }});
                 this.$router.push({path: '/newbase', query: {center: item}});
             },
+            locationSuccess(point, AddressComponent, marker){
+                console.dir(point)
+                this.start=point.point
+                console.dir(AddressComponent)
+                console.dir(marker)
+            },
             getDate() {
                 // console.log("获取数据")
 
             },
             getClickIndex() {
                 console.dir(this.center)
+                this.ent=this.center
             },
             getClickInfo(e) {
                 this.center.lng = e.point.lng;

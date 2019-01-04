@@ -49,5 +49,13 @@
     }
 </script>
 <style scoped>
+    .content-box{
+        padding-bottom: 30px;
+    }
+    .content{
+        overflow-x: hidden;
+        width: 100%;
+    }
+    .content::-webkit-scrollbar {display:none}
 
 </style>

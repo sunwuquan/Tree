@@ -36,11 +36,6 @@ export default new Router({
                     meta: { title: '订单管理',icon: 'ordermanage', noCache:true }
                 },
                 {
-                    path: '/Demo',
-                    component: resolve => require(['../components/page/Demo.vue'], resolve),
-                    meta: { title: 'Demo',icon: 'Demo', noCache:true }
-                },
-                {
                     path: '/ordermandeteail',
                     component: resolve => require(['../components/page/OrderManDeteail.vue'], resolve),
                     meta: { title: '订单详情',icon: 'Orderdetails', noCache:true }
@@ -54,6 +49,11 @@ export default new Router({
                     path: '/Geography',
                     component: resolve => require(['../components/page/Geography.vue'], resolve),
                     meta: { title: '修改地理位置',icon: 'Geography', noCache:true }
+                },
+                {
+                    path: '/EditBasePosition',
+                    component: resolve => require(['../components/page/EditBasePosition.vue'], resolve),
+                    meta: { title: '编辑基地位置',icon: 'EditBasePosition', noCache:true }
                 },
                 {
                     path: '/ModifyState',

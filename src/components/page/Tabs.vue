@@ -1,11 +1,11 @@
 <template>
-    <div class="body">
+    <div class="tab-body">
         <div class="crumbs">
-            <el-breadcrumb separator="/" class="title">
-                <el-breadcrumb-item class="title_body">社区</el-breadcrumb-item>
+            <el-breadcrumb separator="/" class="tab-crumbas-title">
+                <el-breadcrumb-item class="tab-crumbas-title_body">社区</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-        <div class="">
+        <div class="tab-content">
            社区
         </div>
     </div>
@@ -59,39 +59,18 @@
 
 </script>
 
-<style>
-    .body{
-        background: #fff;
-    }
-.message-title{
-    cursor: pointer;
-}
-.handle-row{
-    margin-top: 30px;
-}
-.title{
-    font-size: 18px;
-    color: #000;
-    left: 250px;
-    /*top: 128px;*/
-    margin-top: 12px;
-    height: 27px;
-    text-align: left;
-    font-family: SourceHanSansSC-bold;
-}
-    .title_body{
-        padding-top: 12px;
-        padding-left: 20px;
-        left: 250px;
-        top: 128px;
-        width: 72px;
-        height: 27px;
-        color: rgba(16, 16, 16, 1);
-        font-size: 18px;
-        text-align: left;
-        font-family: SourceHanSansSC-bold;
-        .el-breadcrumb__inner{
+<style lang="scss">
+    .tab-body{
+        .tab-crumbas-title{
+            font-size: 18px;
+            margin-left: 20px;
+            margin-top: 18px;
             font-weight: 900;
+            color: rgba(16,16,16,1);
+        }
+        .tab-content{
+            margin-left: 20px;
+
         }
     }
 </style>

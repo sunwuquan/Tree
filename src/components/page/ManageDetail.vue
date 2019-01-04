@@ -16,8 +16,8 @@
                     <p class="det-number">编号:{{item.id}}</p>
                     <p class="det-pice">{{item.kg}}/{{item.price}}</p>
                     <div class="det-bottom">
-                        <p @click="handleUpClick(item)">上架</p>
-                        <p @click="handleDownClick(item)">下架</p>
+                        <p @click="handleUpClick(item.id)">上架</p>
+                        <p @click="handleDownClick(item.id)">下架</p>
                         <p @click="handleSelectClick(item)">查看</p>
                         <p @click="handleDelClick(item)">删除</p>
                     </div>
@@ -35,15 +35,37 @@
             }
         },
         methods:{
-            handleUpClick(item){
-                console.dir(item)
+            //上架
+            handleUpClick(itemId) {
+                var List = this.detailId;
+                for (var i = 0; i < List.length; i++) {
+                    var item = List[i];
+                    if (itemId === item.id) {
+                        item.text = '已上架'
+                        console.dir(item)
+                    }
+                }
+                console.log("上架")
             },
-            handleDownClick(item){
-                console.dir(item)
+            //下架
+            handleDownClick(itemId) {
+                var List = this.detailId;
+                for (var i = 0; i < List.length; i++) {
+                    var item = List[i];
+                    if (itemId === item.id) {
+                        item.text = '已下架'
+                        console.dir(item)
+                    }
+                }
+                console.log("下架")
             },
-            handleSelectClick(item){
-                this.$router.push({ path: '/comdetaile', query: { item:item }});
-                console.dir(item)
+            //查看
+            handleSelectClick(item) {
+//                console.dir(item)
+//                console.log("查看"+item.id)
+                var id = item.id
+                this.$router.push({path: '/comdetaile', query: {item: item}});
+//                this.$router.push({ path: '/demotext', query: { item:item }});
             },
             handleDelClick(item){
                 console.dir(item)

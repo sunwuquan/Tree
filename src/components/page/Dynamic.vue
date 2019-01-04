@@ -10,14 +10,15 @@
             </div>
             <div class="Dynamic_top">
                 <el-row>
-                  <el-button>上传</el-button>
+                  <el-button @click="handleClick">上传</el-button>
                   <el-button @click="cancelUpload">取消</el-button>
                 </el-row>
             </div>
             <div class="Dynamic_cont">
                 <el-form ref="form" :model="contract" label-width="0px">
                     <el-form-item label="内容">
-                        <el-input type="textarea" placeholder="输入内容" v-model="contract.remark"></el-input>
+                        <el-input type="textarea" maxlength="500" placeholder="输入内容" v-model="contract.remark"></el-input>
+                        <span>{{remnant}}/500</span>
                     </el-form-item>
                     <el-form-item class="Dynamic_cont_img" label="图片">
                         <el-upload
@@ -29,7 +30,6 @@
                           :limit="10"
                           :on-success="handleSuccess"
                           >
-
                           <i class="el-icon-plus"></i>
                         </el-upload>
                         <el-dialog :visible.sync="dialogVisible">
@@ -49,14 +49,9 @@
             return {
                 dialogVisible: false,
                 dialogImageUrl:'',
-                id:'',
-                form:{
-                    name:''
-                },
                 contract: {
-                    customerid: '',
-                    id: '',
-                    remark:''
+                    remark:'',
+                    fileList:[]
                 },
                 fileList:[
                     {
@@ -76,9 +71,17 @@
             }
         },
         computed:{
-
+            remnant(){
+                return this.contract.remark.length
+            }
         },
         methods:{
+            //上传
+            handleClick(){
+                this.contract.fileList=this.fileList;
+                console.dir(this.contract)
+//                console.dir(this.fileList)
+            },
             // 查看图片时的事件
             handlePictureCardPreview(file) {
                 this.dialogImageUrl = file.url;
@@ -89,9 +92,11 @@
             // 删除图片时的事件
             handleRemove(file, fileList) {
                 console.log(file, fileList);
+                this.fileList=fileList
             },
             handleSuccess(response, file, fileList){
                 console.log( fileList);
+                this.fileList=fileList
             },
             cancelUpload(){
                 this.$router.push({path:'/ordermandeteail'});

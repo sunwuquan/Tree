@@ -10,7 +10,7 @@
             <div class="oeder_E">
                 <div class="order_search">
                     <i class="el-icon-search search_i"></i>
-                    <el-input  placeholder="筛选关键词" class="handle-input mr10"></el-input>
+                    <el-input placeholder="输入订单号" v-model="searchInput" class="handle-input mr10"></el-input>
                     <el-button type="primary" icon="search" @click="search">搜索</el-button>
                 </div>
             </div>
@@ -50,6 +50,7 @@
         name: 'ordermanage',
         data(){
             return {
+                searchInput:'',
                 grouplist:[
                     {
                         name:'已下单',
@@ -81,34 +82,32 @@
                     {
                         Order_img:'../../../static/img/img.jpg',
                         name:'企业树1',
-                        Order_number:'0111100033556654664',
-                        number:'13',
-                        Payment_method:'人民币',
-                        Transaction_amount:'1340',
-                        Order_time:'2018-12-18 13:38',
-                        Order_classification:'已下单'
-                    },
-                    {
-                        Order_img:'../../../static/img/img.jpg',
-                        name:'企业树2',
-                        Order_number:'011110003355666',
-                        number:'18',
-                        Payment_method:'美元',
-                        Transaction_amount:'1340',
-                        Order_time:'2018-12-18 13:38',
-                        Order_classification:'已下单'
-
-                    },
-                    {
-                        Order_img:'../../../static/img/img.jpg',
-                        name:'企业树3',
-                        Order_number:'01111000335566546546',
+                        Order_number:'01111000335',
                         number:'14',
                         Payment_method:'人民币',
                         Transaction_amount:'1340',
                         Order_time:'2018-12-18 13:38',
                         Order_classification:'已下单'
-
+                    },
+                    {
+                        Order_img:'../../../static/img/img.jpg',
+                        name:'企业树3',
+                        Order_number:'011116546546',
+                        number:'14',
+                        Payment_method:'人民币',
+                        Transaction_amount:'1340',
+                        Order_time:'2018-12-18 13:38',
+                        Order_classification:'已下单'
+                    },
+                    {
+                        Order_img:'../../../static/img/img.jpg',
+                        name:'企业树3',
+                        Order_number:'0335566546546',
+                        number:'14',
+                        Payment_method:'人民币',
+                        Transaction_amount:'1340',
+                        Order_time:'2018-12-18 13:38',
+                        Order_classification:'已下单'
                     }
                 ],
                 oeder_list:[
@@ -119,7 +118,7 @@
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树1',
-                                Order_number:'01111000335566546546',
+                                Order_number:'01111000335',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -128,7 +127,7 @@
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树3',
-                                Order_number:'01111000335566546546',
+                                Order_number:'011116546546',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -137,7 +136,7 @@
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树3',
-                                Order_number:'01111000335566546546',
+                                Order_number:'0335566546546',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -146,13 +145,13 @@
                         ]
                     },
                     {
-                        name:'已下单',
+                        name:'以确认',
                         id:'2',
                         customerList:[
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树2',
-                                Order_number:'01111000335566546546',
+                                Order_number:'0111546546',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -162,7 +161,7 @@
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树3',
-                                Order_number:'01111000335566546546',
+                                Order_number:'011146546',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -171,7 +170,7 @@
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树3',
-                                Order_number:'01111000335566546546',
+                                Order_number:'0166546546',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -180,13 +179,13 @@
                         ]
                     },
                     {
-                        name:'已下单',
+                        name:'选种中',
                         id:'3',
                         customerList:[
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树3',
-                                Order_number:'01111000335566546546',
+                                Order_number:'0111100033556',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -195,7 +194,7 @@
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树4',
-                                Order_number:'01111000335566546546',
+                                Order_number:'01111000366546546',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -204,7 +203,7 @@
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树5',
-                                Order_number:'01111000335566546546',
+                                Order_number:'0111100033559977',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -213,13 +212,13 @@
                         ]
                     },
                     {
-                        name:'已下单',
+                        name:'运往基地',
                         id:'4',
                         customerList:[
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树4',
-                                Order_number:'01111000335566546546',
+                                Order_number:'01111034573443',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -228,7 +227,7 @@
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树3',
-                                Order_number:'01111000335566546546',
+                                Order_number:'0111100337765443',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -237,7 +236,7 @@
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树3',
-                                Order_number:'01111000335566546546',
+                                Order_number:'01111002233445536546',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -246,13 +245,13 @@
                         ]
                     },
                     {
-                        name:'已下单',
+                        name:'种植中',
                         id:'5',
                         customerList:[
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树5',
-                                Order_number:'01111000335566546546',
+                                Order_number:'0111100221134446546',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -261,7 +260,7 @@
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树3',
-                                Order_number:'01111000335566546546',
+                                Order_number:'01111000322345656776',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -270,7 +269,7 @@
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树3',
-                                Order_number:'01111000335566546546',
+                                Order_number:'01111000112344544546',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -279,13 +278,13 @@
                         ]
                     },
                     {
-                        name:'已下单',
+                        name:'成长中',
                         id:'6',
                         customerList:[
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树6',
-                                Order_number:'01111000335566546546',
+                                Order_number:'01111000311348907546',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -294,7 +293,7 @@
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树3',
-                                Order_number:'01111000335566546546',
+                                Order_number:'011144887646',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -303,7 +302,7 @@
                             {
                                 Order_img:'../../../static/img/img.jpg',
                                 name:'企业树3',
-                                Order_number:'01111000335566546546',
+                                Order_number:'0111100066589946546',
                                 number:'14',
                                 Payment_method:'人民币',
                                 Transaction_amount:'1340',
@@ -318,9 +317,17 @@
 
         },
         methods:{
-
             search(){
-                console.dir('456');
+                console.dir(this.searchInput);
+                const list=this.oeder_details;
+                const input =this.searchInput;
+                const data=[]
+                for(let i=0;i<list.length;i++){
+                    if(input===list[i].Order_number){
+                        data.push(list[i])
+                    }
+                }
+                this.oeder_details=data;
             },
             gteDetails(index){
                 this.$router.push({path:'/ordermandeteail'});
@@ -343,8 +350,6 @@
                         var Order_classification = _item.name;
                         console.dir(Order_classification);
                         var _itemList = _item.customerList;
-
-
                         for (var j = _itemList.length - 1; j >= 0; j--) {
                             var item_list = _itemList[j];
                             // item_list.push(Order_classification);
@@ -352,8 +357,6 @@
                             console.dir(item_list);
                             _tableList.push(item_list);
                         };
-
-
                     }
                 };
                 console.dir(_tableList);

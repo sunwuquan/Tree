@@ -9,7 +9,7 @@
             <div class="header-user-con">
                 <!-- <div class="user-name" @click="handleClick1">退出</div> -->
                 <div class="user-name" @click="handleClick">退出</div>
-                <div class="user-name" @click="handleClick1">忘记密码</div>
+                <!--<div class="user-name" @click="handleClick1">忘记密码</div>-->
             </div>
         </div>
     </div>

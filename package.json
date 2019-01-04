@@ -14,6 +14,8 @@
     "element-ui": "^2.4.5",
     "file-saver": "^2.0.0",
     "mavon-editor": "^2.5.4",
+    "qrcode2": "^1.2.3",
+    "qrcodejs2": "^0.0.2",
     "script-loader": "^0.7.2",
     "vue": "^2.5.16",
     "vue-baidu-map": "^0.21.16",

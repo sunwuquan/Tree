@@ -10,8 +10,8 @@
                 <i class="iconfont base-icon">&#xe633;</i>
                 <input class="base-input" v-model="searchInput" type="text" placeholder="请输入访问日期/名字/手机号">
                 <div class="base-button" @click="handleSearchClick">搜索</div>
-                <!--<div class="base-button" @click="handleDownClick">批量导出</div>-->
-                <div class="base-button" @click="exportTable">批量导出</div>
+                <div class="base-button" @click="handleDownClick">批量导出</div>
+                <!--<div class="base-button" @click="exportTable">批量导出</div>-->
             </div>
             <div class="wish-nav">
                 <span @click="handleClickAll" style="padding: 0 20px">全部</span>
@@ -20,7 +20,7 @@
                 <span @click="handleClickDate">最近一月</span>
             </div>
             <ul>
-                <li v-for="item in dataList" :key="item.id" class="wish-con-body">
+                <li v-for="item in ItemList" :key="item.id" class="wish-con-body">
                     <img class="wish-img" :src="item.img" alt="">
                     <div class="wish-con-body-conetn">
                         <div>
@@ -39,8 +39,7 @@
                         </div>
                     </div>
                     <div class="wish-con-button">
-                        <!--<div @click="handleClickSel(item)">查看</div>-->
-                        <router-link tag="div" to="/Demo">查看</router-link>
+                        <div @click="handleClickSel(item)">查看</div>
                         <div @click="handleClickDow" v-if="item.show">下载二维码</div>
                         <div @click="handleClickChuLi(item)" v-else>处理</div>
                     </div>
@@ -78,14 +77,14 @@
             return {
                 searchInput: '',
                 isIE:true,
-//                pic: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546497260&di=88d6fbdb2a2e1380b4b36a253285abb0&imgtype=jpg&er=1&src=http%3A%2F%2Fupload.mnw.cn%2F2016%2F0126%2F1453768615784.jpg',
-                pic:'http://7xiba5.com2.z0.glb.clouddn.com/07202017-1601-0000-0030-000000000098/20180117225412/file/image/M_20180117225408_0000_T.jpg',
+                pic:'../../../src/assets/chenguihai.png',
                 imgUrl:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546497260&di=88d6fbdb2a2e1380b4b36a253285abb0&imgtype=jpg&er=1&src=http%3A%2F%2Fupload.mnw.cn%2F2016%2F0126%2F1453768615784.jpg',
                 form: {
                     date: '',
                     todate: ''
                 },
                 dialogVisible: false,
+                ItemList:[],
                 dataList: [
                     {
                         phone:'15064777789',
@@ -174,37 +173,35 @@
                         date: '2018-7-4',
                         type: '未处理',
                         img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546423357&di=b054f8545ec689509e77ae4850eb88df&imgtype=jpg&er=1&src=http%3A%2F%2Fimg3.3lian.com%2F2013%2Fs1%2F51%2Fd%2F118.jpg'
-                    }
-                ],
-                list:[
-                    {id:1001,name:'Hello',number:'代码',date:'2018-1-1'},
-                    {id:1002,name:'Hello2',number:'代码2',date:'2018-1-1'},
-                    {id:1004,name:'Hello4',number:'代码4',date:'2018-1-1'},
-                    {id:1003,name:'Hello3',number:'代码3',date:'2018-1-1'}
+                    },
+                    {
+                        phone:'17789990087',
+                        wechart:'1592083838',
+                        treetype:'友情树',
+                        treename:'海枯石烂',
+                        hisstory:'那天，当他替他父亲到经贸委协调有关酒业方面的数据时，他遇见了她。这一见，就让他着了魔，他第一步就请他的父亲打听她是否名花有主，待知道她还是一人时开始对她展开了进攻，几番下来，她感动于他的用心，但在她的心里总有一个疑问，她问他：你家在城里，我家在乡下，门不当，户不对，我们会有共同语言吗？',
+                        hiswish:'我不知道洛是否做了一颗流星，是否完成了他的心愿。',
+                        id: 1009,
+                        name: '九九八十一难',
+                        number: 'Asndddasfd9976',
+                        date: '2017-1-2',
+                        type: '已处理',
+                        img: 'http://pic113.nipic.com/file/20161029/11606188_140619238000_2.jpg'
+                    },
                 ]
             }
         },
         methods: {
-            //============文件导出===========
-            //1. 首先在项目中安装依赖====================================================
-            // npm install -S file-saver xlsx
-            //npm install -D script-loader
-            //2.在webpack.base.conf.js中的resolve: {alias: {   'vendor': path.resolve(__dirname, '../src/vendor')} }添加此代码
-            //3.创建一个vendor文件 然后把Blob.js和Export2Excel.js文件放到里面 此js文件是网上下载的不是自己写的
-            //4.在main.js文件中配置
-            //   import Blob from './vendor/Blob.js'
-            //   import Export2Excel from './vendor/Export2Excel.js'
-            //5.写入此代码:
+            // 导出
             exportTable() {
                 require.ensure([], () => {
                     const { export_json_to_excel } = require('../../vendor/Export2Excel.js');
-                    const tHeader = ['供应商编号', '供应商名称', '输入代码', '税务代码'];
-                    const filterVal = ['id', 'name', 'number', 'date'];
-                    const list = this.list;
+                    const tHeader = ['ID', '昵称', '订单号', '时间','状态'];
+                    const filterVal = ['id', 'name', 'number', 'date','type'];
+                    const list = this.dataList;
                     const data = this.formatJson(filterVal, list);
-//                    export_table_to_excel
                     console.dir(data)
-                    export_json_to_excel(tHeader, data, '供应商名称列表');
+                    export_json_to_excel(tHeader, data, '订单列表');
                 })
                 console.log("=====")
             },
@@ -212,25 +209,79 @@
                  return jsonData.map(v => filterVal.map(j => v[j]))
             },
 //   =======================================================================================
+            //搜索
             handleSearchClick() {
-                console.log(this.searchInput)
+                const list = this.dataList;
+                for (var i = 0; i < list.length; i++) {
+                    var item = list[i];
+                    item.show = true;
+                    if (item.type == "已处理") {
+                        item.show = true;
+                    } else {
+                        item.show = false
+                    }
+                }
+                const input=this.searchInput;
+                const dataList=list;
+                const getList=[];
+                for(let i=0;i<dataList.length;i++){
+                    if(input===dataList[i].name || input===dataList[i].date || input===dataList[i].phone){
+                        getList.push(dataList[i])
+                    }
+                }
+                this.ItemList=getList
             },
             //全部
             handleClickAll(){
                 console.log("全部")
+                var list=this.dataList;
+                for(var i=0;i<list.length-1;i++){
+                    for(var j=0;j<list.length-1-i;j++){
+                        if(list[j].date>list[j+1].date){
+                            var temp=list[j]
+                            list[j]=list[j+1]
+                            list[j+1]=temp
+                        }
+                    }
+                }
+                this.ItemList=''
+                this.ItemList=list
+                console.dir(this.ItemList)
             },
             //三天
             handleClickDay(){
-
-                console.log("三天")
+                console.log(  this.getDay(-3));
+                var date=this.getDay(-3)
+                var list=this.ItemList;
+                var Item=[]
+                for(var i=0;i<list.length;i++){
+                    if(list[i].date>date){
+                        console.dir(list[i])
+                    }
+                }
+            },
+            getDay(AddDayCount){
+                    var dd = new Date();
+                    dd.setDate(dd.getDate()+AddDayCount);//获取AddDayCount天后的日期
+                    var y = dd.getFullYear();
+                    var m = dd.getMonth()+1;//获取当前月份的日期
+                    var d = dd.getDate();
+                    return y+"-"+m+"-"+d;
             },
             //两周
             handleClickM(){
+                console.log(  this.getDay(-14));
                 console.log("两周")
             },
             //月
             handleClickDate() {
                 console.log("月")
+                var dd = new Date();
+                dd.setMonth(dd.getMonth()-1);
+                var y = dd.getFullYear();
+                var m = dd.getMonth()+1;//获取当前月份的日期
+                var d = dd.getDate();
+                console.log(y+"-"+m+"-"+d)
             },
             //批量导出
             handleDownClick() {
@@ -239,6 +290,8 @@
             //提交导出
             handleDialeDown() {
                 console.dir(this.form)
+                this.dialogVisible=false;
+                this.exportTable();
             },
             //查看
             handleClickSel(item) {
@@ -263,6 +316,7 @@
                         item.show = false
                     }
                 }
+                this.ItemList=list
                 console.dir(list)
             },
             //下载二维码

@@ -11,6 +11,7 @@ import './assets/icon/iconfont.css'
 import BaiduMap from 'vue-baidu-map'
 import Blob from './vendor/Blob.js'
 import Export2Excel from './vendor/Export2Excel.js'
+import QRCode from 'qrcodejs2'
 Vue.use(ElementUI, { size: 'small' });
 Vue.use(BaiduMap, {
     // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */

@@ -77,7 +77,8 @@
     import 'quill/dist/quill.core.css';
     import 'quill/dist/quill.snow.css';
     import 'quill/dist/quill.bubble.css';
-    import { quillEditor } from 'vue-quill-editor';
+    import {quillEditor} from 'vue-quill-editor';
+
     export default {
         name: 'editbase',
         components: {
@@ -85,51 +86,52 @@
         },
         data() {
             return {
-                content:'asdf adsf as fad a f',
+                content: {},
                 editorOption: {
                     placeholder: 'Hello World'
                 },
-                list:{
-                    lat:'',
-                    lng:''
+                list: {
+                    lat: '',
+                    lng: ''
                 },
                 form: {
                     title: '',
-                    imgUrl: '',
+                    img: '',
+                    id: '',
                     acreage: '',
                     lng: '3332.22',
                     lat: '10097',
-                    imgUrlList: [],
-                    content:'',
+                    imglist: [],
+                    content: '',
                     desc: ''
                 },
                 fileList2: [],
                 imageUrl: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg',
                 dialogImageUrl: '',
                 dialogVisible: false,
-                itemId:[]
+                itemId: []
             }
         },
         methods: {
-            handleBaseEdit(){
-                this. list.lat=this.form.lat
-                this. list.lng=this.form.lng
+            handleBaseEdit() {
+                this.list.lat = this.form.lat
+                this.list.lng = this.form.lng
 //                console.dir(this.list)
-                this.$router.push({ path: '/baseeditpositon', query: { item:this.list}});
+                this.$router.push({path: '/EditBasePosition', query: {item: this.list, id: this.form}});
             },
-            onEditorChange({ editor, html, text }) {
+            onEditorChange({editor, html, text}) {
                 this.content = html;
             },
             onSubmit(form) {
-                this.form.imgUrlList=this.fileList2
-                this.form.imgUrl=this.imageUrl
+                this.form.imgUrlList = this.fileList2
+                this.form.imgUrl = this.imageUrl
 
-                this.form.desc=this.content
+                this.form.desc = this.content
                 console.dir(this.form)
             },
             handleRemove(file, fileList) {
                 console.log(file, fileList);
-                this.fileList2=fileList
+                this.fileList2 = fileList
             },
             handlePictureCardPreview(file) {
                 this.dialogImageUrl = file.url;
@@ -138,7 +140,7 @@
             handleAvatarSuccess(res, file) {
                 this.imageUrl = URL.createObjectURL(file.raw);
             },
-            handleAvatarSuccesslist(res, file,filelist) {
+            handleAvatarSuccesslist(res, file, filelist) {
                 const list={}
                 for(let i=0;i<filelist.length;i++){
                     list.name=filelist[i].name
@@ -162,12 +164,22 @@
             }
         },
         created() {
-            this.form = this.$route.query.item
-            console.dir(this.form)
-            this.imageUrl=this.form.img
-            this.fileList2=this.form.imglist
-            this.content=this.form.content
-//            console.dir(this.list)
+            var list={}
+            var Item={}
+            list = this.$route.query.item
+            Item  = this.$route.query.id
+            this.center=this.$route.query.center
+            if (list!==undefined){
+                this.form=list
+            }else if (Item!==undefined){
+                this.form=Item
+                this.form.lat=this.center.lat;
+                this.form.lng=this.center.lng;
+            }
+            this.imageUrl = this.form.img
+            this.fileList2 = this.form.imglist
+            this.content = this.form.content
+            console.dir(this.center)
         }
     }
 </script>
@@ -188,7 +200,7 @@
             font-size: 18px;
             text-align: left;
             font-family: SourceHanSansSC-bold;
-            .el-breadcrumb__inner{
+            .el-breadcrumb__inner {
                 font-weight: 900;
             }
         }
@@ -196,11 +208,11 @@
             margin-left: 20px;
             margin-top: 40px;
             margin-right: 20px;
-            .el-upload--text{
+            .el-upload--text {
                 width: 156px;
                 height: 156px;
             }
-            .avatar-uploader{
+            .avatar-uploader {
                 display: inline-block;
                 /*margin-left: 100px;*/
                 vertical-align: top;
